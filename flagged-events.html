@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flagged Events Log</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h2 class="site-title">Thesis Deployment Verification Dashboard</h2>
+    <div class="meta-grid">
+      <div><strong>Deployment:</strong> <span id="meta-name"></span></div>
+      <div><strong>Start Date:</strong> <span id="meta-start"></span></div>
+      <div><strong>Gateway Device ID:</strong> <span id="meta-gateway"></span></div>
+      <div><strong>Total Runtime:</strong> <span id="meta-runtime"></span></div>
+    </div>
+  </header>
+
+  <nav>
+    <a href="index.html">Dashboard</a>
+    <a href="packet-log.html">Live Packet Log</a>
+    <a href="evidence.html">Verification Evidence</a>
+    <a href="anchors.html">Blockchain Anchors</a>
+    <a href="downloads.html">Downloads</a>
+    <a href="how-to-verify.html">How to Verify</a>
+    <a href="enrollment.html">Node Enrollment</a>
+    <a class="active" href="flagged-events.html">Flagged Events</a>
+  </nav>
+
+  <main>
+    <h1>Flagged Events Log</h1>
+    <section class="section table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Timestamp</th>
+            <th>Node</th>
+            <th>Event Type</th>
+            <th>Description</th>
+            <th>Impact</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="flagged"><td>2026-01-19 11:16:03</td><td>Node 2</td><td>Sequence Gap</td><td>Packet counter jumped from 2090 to 2094.</td><td>Possible packet loss</td></tr>
+          <tr class="rejected"><td>2026-01-19 13:41:55</td><td>Node 3</td><td>Challenge Failure</td><td>Layer 2 challenge-response failed for nonce 8A31.</td><td>Reading rejected</td></tr>
+          <tr class="flagged"><td>2026-01-19 14:02:11</td><td>Node 2</td><td>Plausibility Violation</td><td>Humidity changed by +22% within one minute.</td><td>Reading flagged</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
