@@ -59,6 +59,26 @@
         <div><a href="#">Download</a></div>
       </div>
     </section>
+
+    <section class="section">
+      <h3>Custom Data Export (Choose What to Download)</h3>
+      <p>Select the parts of deployment data you want, then click <strong>Download Selected Parts</strong>.</p>
+
+      <div class="selection-grid" id="download-selection">
+        <label><input type="checkbox" value="deploymentMeta" checked /> Deployment Metadata</label>
+        <label><input type="checkbox" value="nodeStatus" checked /> Node Status Snapshot</label>
+        <label><input type="checkbox" value="packetLog" checked /> Recent Packet Log</label>
+        <label><input type="checkbox" value="verificationSummary" checked /> Verification Summary</label>
+        <label><input type="checkbox" value="auditLog" checked /> Audit Events</label>
+        <label><input type="checkbox" value="blockchainAnchors" checked /> Blockchain Anchors</label>
+      </div>
+
+      <div class="button-row">
+        <button id="download-selected-btn">Download Selected Parts (.json)</button>
+      </div>
+
+      <p id="download-message" class="helper-text"></p>
+    </section>
   </main>
 
   <script src="app.js"></script>

@@ -125,6 +125,62 @@ function renderAnchors() {
   });
 }
 
+
+function buildDownloadPayload(selectedParts) {
+  const exportMap = {
+    deploymentMeta,
+    nodeStatus,
+    packetLog: packets,
+    verificationSummary: evidence,
+    auditLog: auditEvents,
+    blockchainAnchors: anchors,
+  };
+
+  const payload = {};
+  selectedParts.forEach((key) => {
+    payload[key] = exportMap[key];
+  });
+
+  return payload;
+}
+
+function triggerJsonDownload(filename, data) {
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+function initCustomDownload() {
+  const button = document.getElementById("download-selected-btn");
+  if (!button) return;
+
+  const message = document.getElementById("download-message");
+
+  button.addEventListener("click", () => {
+    const checkboxes = Array.from(document.querySelectorAll("#download-selection input[type='checkbox']"));
+    const selectedParts = checkboxes.filter((checkbox) => checkbox.checked).map((checkbox) => checkbox.value);
+
+    if (!selectedParts.length) {
+      message.textContent = "Please select at least one data section before downloading.";
+      return;
+    }
+
+    const payload = {
+      exportedAt: new Date().toISOString(),
+      selectedSections: selectedParts,
+      data: buildDownloadPayload(selectedParts),
+    };
+
+    triggerJsonDownload("thesis-selected-data.json", payload);
+    message.textContent = `Downloaded ${selectedParts.length} selected section(s).`;
+  });
+}
 function setRefreshTime() {
   const targets = document.querySelectorAll(".refresh-time");
   const now = new Date().toLocaleString();
@@ -145,3 +201,4 @@ renderDashboard();
 renderPackets();
 renderEvidence();
 renderAnchors();
+initCustomDownload();
