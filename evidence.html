@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verification Evidence</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h2 class="site-title">Thesis Deployment Verification Dashboard</h2>
+    <div class="meta-grid">
+      <div><strong>Deployment:</strong> <span id="meta-name"></span></div>
+      <div><strong>Start Date:</strong> <span id="meta-start"></span></div>
+      <div><strong>Gateway Device ID:</strong> <span id="meta-gateway"></span></div>
+      <div><strong>Total Runtime:</strong> <span id="meta-runtime"></span></div>
+    </div>
+  </header>
+
+  <nav>
+    <a href="index.html">Dashboard</a>
+    <a href="packet-log.html">Live Packet Log</a>
+    <a class="active" href="evidence.html">Verification Evidence</a>
+    <a href="anchors.html">Blockchain Anchors</a>
+    <a href="downloads.html">Downloads</a>
+    <a href="how-to-verify.html">How to Verify</a>
+    <a href="enrollment.html">Node Enrollment</a>
+    <a href="flagged-events.html">Flagged Events</a>
+  </nav>
+
+  <main>
+    <h1>Verification Evidence</h1>
+
+    <section class="section table-wrap">
+      <h3>Per-Node Verification Summary</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Node</th>
+            <th>Total Packets</th>
+            <th>Verified</th>
+            <th>Flagged</th>
+            <th>Rejected</th>
+            <th>Layer 2 Challenge Success</th>
+            <th>Sequence Gaps Logged</th>
+          </tr>
+        </thead>
+        <tbody id="summary-body"></tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h3>Audit Log Viewer</h3>
+      <ul id="audit-list"></ul>
+    </section>
+
+    <section class="section info-note">
+      <strong>What This Means:</strong> A verified reading means the gateway confirmed the sensor was live, the data was not replayed, and the values are physically plausible.
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

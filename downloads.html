@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Downloads</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h2 class="site-title">Thesis Deployment Verification Dashboard</h2>
+    <div class="meta-grid">
+      <div><strong>Deployment:</strong> <span id="meta-name"></span></div>
+      <div><strong>Start Date:</strong> <span id="meta-start"></span></div>
+      <div><strong>Gateway Device ID:</strong> <span id="meta-gateway"></span></div>
+      <div><strong>Total Runtime:</strong> <span id="meta-runtime"></span></div>
+    </div>
+  </header>
+
+  <nav>
+    <a href="index.html">Dashboard</a>
+    <a href="packet-log.html">Live Packet Log</a>
+    <a href="evidence.html">Verification Evidence</a>
+    <a href="anchors.html">Blockchain Anchors</a>
+    <a class="active" href="downloads.html">Downloads</a>
+    <a href="how-to-verify.html">How to Verify</a>
+    <a href="enrollment.html">Node Enrollment</a>
+    <a href="flagged-events.html">Flagged Events</a>
+  </nav>
+
+  <main>
+    <h1>Downloads</h1>
+
+    <section class="section">
+      <div class="download-grid">
+        <div><strong>Download</strong></div>
+        <div><strong>Format</strong></div>
+        <div><strong>Purpose</strong></div>
+        <div><strong>Link</strong></div>
+
+        <div>Verified Dataset</div>
+        <div>.xlsx</div>
+        <div>Full sensor readings with verification classification.</div>
+        <div><a href="#">Download</a></div>
+
+        <div>Audit Log</div>
+        <div>.xlsx / .csv</div>
+        <div>Complete gateway event log including sequence gaps and flags.</div>
+        <div><a href="#">Download</a></div>
+
+        <div>Merkle Verification Script</div>
+        <div>.py</div>
+        <div>Recompute Merkle root and compare against blockchain anchor.</div>
+        <div><a href="#">Download</a></div>
+
+        <div>Deployment Summary Report</div>
+        <div>.pdf</div>
+        <div>Auto-generated summary of nodes, runtime, verified count, and anchor count.</div>
+        <div><a href="#">Download</a></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>Custom Data Export (Choose What to Download)</h3>
+      <p>Select the parts of deployment data you want, then click <strong>Download Selected Parts</strong>.</p>
+
+      <div class="selection-grid" id="download-selection">
+        <label><input type="checkbox" value="deploymentMeta" checked /> Deployment Metadata</label>
+        <label><input type="checkbox" value="nodeStatus" checked /> Node Status Snapshot</label>
+        <label><input type="checkbox" value="packetLog" checked /> Recent Packet Log</label>
+        <label><input type="checkbox" value="verificationSummary" checked /> Verification Summary</label>
+        <label><input type="checkbox" value="auditLog" checked /> Audit Events</label>
+        <label><input type="checkbox" value="blockchainAnchors" checked /> Blockchain Anchors</label>
+      </div>
+
+      <div class="button-row">
+        <button id="download-selected-btn">Download Selected Parts (.json)</button>
+      </div>
+
+      <p id="download-message" class="helper-text"></p>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blockchain Anchors</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h2 class="site-title">Thesis Deployment Verification Dashboard</h2>
+    <div class="meta-grid">
+      <div><strong>Deployment:</strong> <span id="meta-name"></span></div>
+      <div><strong>Start Date:</strong> <span id="meta-start"></span></div>
+      <div><strong>Gateway Device ID:</strong> <span id="meta-gateway"></span></div>
+      <div><strong>Total Runtime:</strong> <span id="meta-runtime"></span></div>
+    </div>
+  </header>
+
+  <nav>
+    <a href="index.html">Dashboard</a>
+    <a href="packet-log.html">Live Packet Log</a>
+    <a href="evidence.html">Verification Evidence</a>
+    <a class="active" href="anchors.html">Blockchain Anchors</a>
+    <a href="downloads.html">Downloads</a>
+    <a href="how-to-verify.html">How to Verify</a>
+    <a href="enrollment.html">Node Enrollment</a>
+    <a href="flagged-events.html">Flagged Events</a>
+  </nav>
+
+  <main>
+    <h1>Blockchain Anchors</h1>
+
+    <section class="section table-wrap">
+      <h3>Anchor Log Table</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Batch #</th>
+            <th>Anchored Timestamp</th>
+            <th>Readings in Batch</th>
+            <th>Merkle Root Hash</th>
+            <th>Solana Transaction ID</th>
+          </tr>
+        </thead>
+        <tbody id="anchor-body"></tbody>
+      </table>
+    </section>
+
+    <section class="section info-note">
+      Each anchor is a permanent public record that proves this batch of sensor data existed at the stated time and has not been altered since.
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

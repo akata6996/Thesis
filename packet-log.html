@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live Packet Log</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h2 class="site-title">Thesis Deployment Verification Dashboard</h2>
+    <div class="meta-grid">
+      <div><strong>Deployment:</strong> <span id="meta-name"></span></div>
+      <div><strong>Start Date:</strong> <span id="meta-start"></span></div>
+      <div><strong>Gateway Device ID:</strong> <span id="meta-gateway"></span></div>
+      <div><strong>Total Runtime:</strong> <span id="meta-runtime"></span></div>
+    </div>
+  </header>
+
+  <nav>
+    <a href="index.html">Dashboard</a>
+    <a class="active" href="packet-log.html">Live Packet Log</a>
+    <a href="evidence.html">Verification Evidence</a>
+    <a href="anchors.html">Blockchain Anchors</a>
+    <a href="downloads.html">Downloads</a>
+    <a href="how-to-verify.html">How to Verify</a>
+    <a href="enrollment.html">Node Enrollment</a>
+    <a href="flagged-events.html">Flagged Events</a>
+  </nav>
+
+  <main>
+    <h1>Live Packet Log</h1>
+
+    <section class="section">
+      <p><strong>Last Page Refresh:</strong> <span class="refresh-time"></span></p>
+      <button id="refresh-btn">Refresh to Update</button>
+    </section>
+
+    <section class="section table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Node ID</th>
+            <th>Sensor Value</th>
+            <th>Device Timestamp</th>
+            <th>Sequence #</th>
+            <th>Layer 1</th>
+            <th>Layer 2</th>
+            <th>Layer 3</th>
+            <th>Overall Classification</th>
+          </tr>
+        </thead>
+        <tbody id="packet-body"></tbody>
+      </table>
+    </section>
+
+    <section class="section info-note">
+      This table shows the packets received from ESP32 sensors since the last page refresh. Verification is performed automatically by the gateway.
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
