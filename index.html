@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gateway Verifiability Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <h1>IoT Gateway</h1>
+        <p class="subtitle">Acquisition-Time Verifiability</p>
+
+        <div class="nav-group">
+          <h2>Verification (Read-only)</h2>
+          <button class="nav-link active" data-page="overview">Dashboard Overview</button>
+          <button class="nav-link" data-page="logs">Verification Log Viewer</button>
+          <button class="nav-link" data-page="merkle">Merkle & Anchoring Status</button>
+          <button class="nav-link" data-page="workspace">Merkle Verification Workspace</button>
+        </div>
+
+        <div class="nav-group">
+          <h2>Operator Tools</h2>
+          <button class="nav-link operator" data-page="registry">Node Enrollment & Registry</button>
+          <button class="nav-link operator" data-page="reset">Session Reset Control</button>
+          <button class="nav-link operator" data-page="exports">Export & Artifacts Center</button>
+        </div>
+      </aside>
+
+      <main class="content">
+        <header class="top-bar">
+          <div class="status-group">
+            <span class="status-pill online">Gateway Online</span>
+            <span class="status-pill online">Broker Online</span>
+            <span class="status-pill online">Storage OK</span>
+            <span class="status-pill queue">Anchoring Queue Size: <strong>4</strong></span>
+          </div>
+
+          <div class="filters-row">
+            <label>
+              Global Search (node_id / session_id)
+              <input id="globalSearch" type="text" placeholder="e.g. node-001 or sess-a91" />
+            </label>
+            <label>
+              Time Range
+              <select id="timeRange">
+                <option>Last 1h</option>
+                <option selected>Last 24h</option>
+                <option>Last 7d</option>
+                <option>Custom</option>
+              </select>
+            </label>
+            <label>
+              Custom From
+              <input type="datetime-local" />
+            </label>
+            <label>
+              Custom To
+              <input type="datetime-local" />
+            </label>
+          </div>
+        </header>
+
+        <section class="page active" id="page-overview">
+          <h2>Dashboard Overview <span class="readonly-tag">READ-ONLY</span></h2>
+          <div class="card-grid six">
+            <article class="card"><h3>Total Enrolled Nodes</h3><p>42</p></article>
+            <article class="card"><h3>Active Sessions</h3><p>36</p></article>
+            <article class="card"><h3>Interrupted Sessions</h3><p>6</p></article>
+            <article class="card"><h3>Admitted Count (range)</h3><p>128,430</p></article>
+            <article class="card"><h3>Rejected Count (range)</h3><p>1,492</p></article>
+            <article class="card"><h3>Latest Anchor Status</h3><p><span class="badge confirmed">CONFIRMED</span></p></article>
+          </div>
+
+          <div class="table-tools">
+            <label><input type="checkbox" /> Only ACTIVE</label>
+            <label><input type="checkbox" /> Only INTERRUPTED</label>
+            <input type="text" placeholder="Filter by node_id" />
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>node_id</th><th>status</th><th>session_status</th><th>last_seq</th><th>last_seen</th><th>expected_interval_ms</th><th>admitted_count</th><th>rejected_count</th><th>disconnect_timestamp</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>node-001</td><td><span class="badge enrolled">ENROLLED</span></td><td><span class="badge active">ACTIVE</span></td><td>9302</td><td>2026-01-11 10:21:33</td><td>1000</td><td>9320</td><td>12</td><td>-</td></tr>
+                <tr><td>node-002</td><td><span class="badge suspended">SUSPENDED</span></td><td><span class="badge interrupted">INTERRUPTED</span></td><td>188</td><td>2026-01-11 08:02:10</td><td>500</td><td>188</td><td>2</td><td>2026-01-11 08:05:09</td></tr>
+                <tr><td>node-014</td><td><span class="badge enrolled">ENROLLED</span></td><td><span class="badge active">ACTIVE</span></td><td>4881</td><td>2026-01-11 10:20:58</td><td>2000</td><td>4900</td><td>4</td><td>-</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="page" id="page-logs">
+          <h2>Verification Log Viewer <span class="readonly-tag">READ-ONLY</span></h2>
+          <div class="table-tools">
+            <input type="text" placeholder="Filter: node_id" />
+            <input type="text" placeholder="Filter: session_id" />
+            <select><option>Admission: All</option><option>ACCEPT</option><option>REJECT</option></select>
+            <button class="ghost">Export view as CSV</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>record_id</th><th>node_id</th><th>session_id</th><th>timestamp_device</th><th>timestamp_gateway_arrival</th><th>seq_num</th><th>sensor_value</th><th>admission</th><th>rejection_reason</th><th>enforcement_layer_failed</th><th>anomaly_flags</th><th>prev_hash</th><th>curr_hash</th></tr></thead>
+              <tbody>
+                <tr><td>rec-1</td><td>node-001</td><td>sess-a91</td><td>10:20:01</td><td>10:20:01.033</td><td>9301</td><td>23.4</td><td><span class="badge accept">ACCEPT</span></td><td>-</td><td>-</td><td>none</td><td><button class="link-btn">copy prev_hash</button></td><td><button class="link-btn">copy curr_hash</button></td></tr>
+                <tr><td>rec-2</td><td>node-002</td><td>sess-k22</td><td>08:01:59</td><td>08:02:00.441</td><td>189</td><td>96.2</td><td><span class="badge reject">REJECT</span></td><td>range_violation</td><td>sensor_policy</td><td>value_jump</td><td><button class="link-btn">copy prev_hash</button></td><td><button class="link-btn">copy curr_hash</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="drawer">
+            <h3>Expanded Row: Full JSON + Enforcement Metadata</h3>
+            <pre>{
+  "record_id": "rec-2",
+  "payload": {"node_id": "node-002", "value": 96.2},
+  "metadata": {"admission": "REJECT", "failed_layer": "sensor_policy"}
+}</pre>
+          </div>
+          <p>Pagination: ◀ 1 2 3 ▶</p>
+        </section>
+
+        <section class="page" id="page-merkle">
+          <h2>Merkle & Anchoring Status <span class="readonly-tag">READ-ONLY</span></h2>
+          <p class="note">Anchoring is preservation-only; does not affect admission decisions.</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>batch_id</th><th>interval_start</th><th>interval_end</th><th>merkle_root</th><th>leaf_count</th><th>anchor_status</th><th>solana_tx_id</th><th>anchored_at</th><th>retries</th></tr></thead>
+              <tbody>
+                <tr><td>batch-301</td><td>10:00</td><td>10:15</td><td>0x99ab...f1d4</td><td>3420</td><td><span class="badge confirmed">CONFIRMED</span></td><td>5dxa...22L</td><td>10:16:08</td><td>0</td></tr>
+                <tr><td>batch-302</td><td>10:15</td><td>10:30</td><td>0x77cf...ab20</td><td>3301</td><td><span class="badge queued">QUEUED</span></td><td>-</td><td>-</td><td>1</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="split">
+            <article class="card">
+              <h3>Batch Detail</h3>
+              <p>merkle_root: <code>0x99ab...f1d4</code></p>
+              <p>Leaf hashes: <a href="#">view file /artifacts/batch-301-leaves.json</a></p>
+              <button class="ghost">Download inclusion proofs bundle</button>
+            </article>
+            <article class="card">
+              <h3>Batch Timeline</h3>
+              <ul>
+                <li>10:16 batch-301 CONFIRMED</li>
+                <li>10:30 batch-302 QUEUED</li>
+                <li>10:45 batch-303 SUBMITTED</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="page" id="page-registry">
+          <h2>Node Enrollment & Registry <span class="operator-tag">OPERATOR</span></h2>
+          <p class="note">Enrollment is administrative, not cryptographic authentication.</p>
+          <form class="form-grid" data-action-type="Enroll Node">
+            <label>node_id (required)<input required placeholder="node-099" /></label>
+            <label>expected_interval_ms (required)<input required type="number" placeholder="1000" /></label>
+            <label>sensor_type (optional)<input placeholder="temperature" /></label>
+            <label>min_value/max_value (optional)<input placeholder="0 / 50" /></label>
+            <label>rate_of_change_limit (optional)<input placeholder="5 units/s" /></label>
+            <button type="button" class="operator-action" data-action="Enroll Node">Enroll Node</button>
+          </form>
+
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>node_id</th><th>registered_at</th><th>expected_interval_ms</th><th>status</th><th>last_seen</th><th>notes</th><th>actions</th></tr></thead>
+              <tbody>
+                <tr><td>node-001</td><td>2026-01-01</td><td>1000</td><td><span class="badge enrolled">ENROLLED</span></td><td>10:21</td><td>Main greenhouse</td><td><button class="operator-action" data-action="Suspend Node" data-node="node-001">Suspend</button></td></tr>
+                <tr><td>node-002</td><td>2026-01-02</td><td>500</td><td><span class="badge suspended">SUSPENDED</span></td><td>08:02</td><td>Manual investigation</td><td><button class="operator-action" data-action="Reactivate Node" data-node="node-002">Reactivate</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="page" id="page-reset">
+          <h2>Session Reset Control <span class="operator-tag">OPERATOR</span></h2>
+          <div class="split">
+            <article class="card">
+              <h3>Per-node Session Panel</h3>
+              <p>node_id: <strong>node-014</strong></p>
+              <p>current session_id: <strong>sess-k44</strong></p>
+              <p>last_seq: <strong>4881</strong></p>
+              <p>last_seen: <strong>10:20:58</strong></p>
+              <p>session_status: <span class="badge active">ACTIVE</span></p>
+              <label>Reason text (required)<textarea id="resetReason" placeholder="State reason for reset"></textarea></label>
+              <button class="operator-action" data-action="Trigger SESSION_RESET" data-node="node-014">Trigger SESSION_RESET</button>
+              <p class="note">Next packet will establish new expected_seq baseline.</p>
+            </article>
+            <article class="card">
+              <h3>Recent Resets</h3>
+              <table>
+                <thead><tr><th>timestamp</th><th>node_id</th><th>reason</th><th>operator_id</th><th>receipt_id</th></tr></thead>
+                <tbody>
+                  <tr><td>2026-01-11 07:10</td><td>node-008</td><td>maintenance</td><td>op-12</td><td>rct-1882</td></tr>
+                  <tr><td>2026-01-10 19:04</td><td>node-002</td><td>sequence desync</td><td>op-09</td><td>rct-1881</td></tr>
+                </tbody>
+              </table>
+            </article>
+          </div>
+        </section>
+
+        <section class="page" id="page-exports">
+          <h2>Export & Verification Artifacts Center <span class="operator-tag">OPERATOR</span></h2>
+          <article class="card">
+            <h3>Export Wizard</h3>
+            <ol>
+              <li>Select node_id(s) + date range <input placeholder="node-001,node-014" /></li>
+              <li>Choose data type <select><option>admitted-only</option><option>include rejected metadata</option></select></li>
+              <li>Choose format <select><option>CSV</option><option>JSON</option></select></li>
+              <li>Include extras
+                <label><input type="checkbox" /> enforcement metadata</label>
+                <label><input type="checkbox" /> anomaly flags</label>
+                <label><input type="checkbox" /> session events</label>
+              </li>
+              <li><button class="operator-action" data-action="Generate Export" data-node="multi">Generate export</button></li>
+            </ol>
+          </article>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>artifact</th><th>filename</th><th>generated_at</th><th>size</th><th>checksum (sha256)</th><th>download</th></tr></thead>
+              <tbody>
+                <tr><td>Audit Log (hash-linked)</td><td>audit_log_2026-01-11.csv</td><td>10:18</td><td>23MB</td><td>f92a...a71</td><td><button class="ghost">Download</button></td></tr>
+                <tr><td>Merkle Batch Files</td><td>batches_2026-01-11.zip</td><td>10:18</td><td>4MB</td><td>2ab1...d22</td><td><button class="ghost">Download</button></td></tr>
+                <tr><td>Inclusion Proofs</td><td>proofs_301_302.zip</td><td>10:18</td><td>2MB</td><td>bb39...f90</td><td><button class="ghost">Download</button></td></tr>
+                <tr><td>Anchoring References (tx IDs)</td><td>anchors_refs.json</td><td>10:18</td><td>220KB</td><td>c90a...1e2</td><td><button class="ghost">Download</button></td></tr>
+                <tr><td>Deployment Summary Report</td><td>deployment_summary.pdf</td><td>10:18</td><td>1.4MB</td><td>8af3...24b</td><td><button class="ghost">Download</button></td></tr>
+                <tr><td>Merkle Verification Script</td><td>verify_merkle.py</td><td>10:18</td><td>14KB</td><td>05cd...ff1</td><td><button class="ghost">Download</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="page" id="page-workspace">
+          <h2>Merkle Verification Workspace <span class="readonly-tag">READ-ONLY TOOLS</span></h2>
+          <p class="note">Verification validates integrity of admitted records and anchoring references; does not prove sensor hardware authenticity.</p>
+          <form class="form-grid">
+            <label>batch_id or solana_tx_id<input placeholder="batch-301 or 5dxa...22L" /></label>
+            <label>Upload log/export file<input type="file" /></label>
+            <label>Upload proofs bundle<input type="file" /></label>
+            <label>Computed merkle_root<input value="0x99ab...f1d4" readonly /></label>
+            <label>Recorded merkle_root<input value="0x99ab...f1d4" readonly /></label>
+            <label>Result<input value="MATCH" readonly /></label>
+          </form>
+          <article class="card">
+            <h3>Script Example (Placeholder)</h3>
+            <pre>python verify_merkle.py \
+  --batch-id batch-301 \
+  --log-file ./exports/audit_log.csv \
+  --proofs ./proofs/proofs_301.zip</pre>
+          </article>
+        </section>
+
+        <footer>
+          Trust Model Notice: UI does not modify admitted records; enforcement occurs at gateway before persistence; blockchain anchoring is preservation-only.
+        </footer>
+      </main>
+    </div>
+
+    <div class="modal hidden" id="confirmModal">
+      <div class="modal-content">
+        <h3>Confirm Operator Action</h3>
+        <p id="confirmText"></p>
+        <div class="row">
+          <button id="cancelAction">Cancel</button>
+          <button id="confirmAction">Confirm</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="receipt hidden" id="receipt"></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
